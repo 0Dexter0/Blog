@@ -10,6 +10,7 @@ namespace Blog.Models
 
         public User()
         {
+            Posts = new();
         }
     }
 }
