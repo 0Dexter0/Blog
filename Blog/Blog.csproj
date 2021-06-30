@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <UserSecretsId>aspnet-Blog-54C80B8A-5D39-47BE-9FF9-6B5FB5F3EDC6</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0" NoWarn="NU1605"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.0" NoWarn="NU1605"/>
+        <PackageReference Include="Microsoft.Identity.Web" Version="1.1.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3"/>
+    </ItemGroup>
+
+</Project>
