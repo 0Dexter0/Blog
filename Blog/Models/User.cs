@@ -14,5 +14,13 @@ namespace Blog.Models
         {
             Posts = new();
         }
+
+        public User(string userName, string email, string password)
+        {
+            UserName = userName;
+            Email = email;
+            Password = password;
+            Posts = new();
+        }
     }
 }
