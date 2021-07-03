@@ -7,12 +7,12 @@ namespace Blog.Models
         [EmailAddress]
         public string Email { get; set; }
         [Required]
-        public string Passwod { get; set; }
+        public string Password { get; set; }
 
         public LoginModel(string email, string passwod)
         {
             Email = email;
-            Passwod = passwod;
+            Password = passwod;
         }
 
         public LoginModel()
