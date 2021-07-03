@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Blog.Models;
+using Blog.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,29 +10,28 @@ namespace Blog.Controllers
     [Route("posts")]
     public class PostController : Controller
     {
+        private PostRepository _postRepository = new();
+        
         [HttpGet]
         public List<Post> GetPosts()
         {
-            /// TODO: return posts from db
             /// TODO: add paging
 
-            return null;
+            return _postRepository.GetAll();
         }
 
         [HttpGet]
         [Route("{id}")]
         public Post GetPostBuId([FromRoute] long id)
         {
-            /// TODO: get post by id from db
-
-            return null;
+            return _postRepository.GetPostById(id);
         }
 
         [Authorize]
         [HttpPost]
         public Post CreatePost([FromBody] Post post)
         {
-            /// TODO: add post to db
+            _postRepository.Create(post);
 
             return post;
         }
@@ -41,19 +41,15 @@ namespace Blog.Controllers
         [Route("{id}")]
         public Post UpdatePost([FromRoute] long id, [FromBody] PostUpdateModel update)
         {
-            /// TODO: get post from db and update
-
-            return null;
+            return  _postRepository.Update(id, update); 
         }
 
         [Authorize]
         [HttpDelete]
         [Route("{id}")]
-        public Post Delete([FromRoute] long id)
+        public void Delete([FromRoute] long id)
         {
-            /// TODO: remove post from db
-
-            return null;
+            _postRepository.DeleteById(id);
         }
     }
 }

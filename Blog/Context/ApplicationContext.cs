@@ -19,7 +19,7 @@ namespace Blog.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(
-                "Host=localhost;Port=5432;Database=TestEntity;Username=postgres;Password=password;");
+                "Host=localhost;Port=5432;Database=BlogDatabase;Username=postgres;Password=password;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -16,17 +16,19 @@ namespace Blog.Repositories
             }
         }
 
-        public void Update(long id, PostUpdateModel update)
+        public Post Update(long id, PostUpdateModel update)
         {
             using (ApplicationContext ac = new())
             {
-                Post _post = GetPostById(id);
+                Post post = GetPostById(id);
 
-                if (update.Content is not null) _post.Content = update.Content;
-                if (update.Title is not null) _post.Title = update.Title;
-                _post.LastEdited = update.UpdateTime;
+                if (update.Content is not null) post.Content = update.Content;
+                if (update.Title is not null) post.Title = update.Title;
+                post.LastEdited = update.UpdateTime;
 
                 ac.SaveChanges();
+
+                return post;
             }
         }
 
