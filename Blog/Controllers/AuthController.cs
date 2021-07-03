@@ -13,6 +13,8 @@ namespace Blog.Controllers
         [Route("login")]
         public async Task<User> Login([FromBody]LoginModel lm)
         {
+            if (!ModelState.IsValid) return null;
+            
             ClaimsIdentity claimsIdentity = new(new[]
             {
                 new Claim(ClaimTypes.Email, lm.Email)
@@ -29,6 +31,8 @@ namespace Blog.Controllers
         [Route("register")]
         public async Task<User> Register([FromBody]RegisterModel rg)
         {
+            if (!ModelState.IsValid) return null;
+
             User user = new(rg.UserName, rg.Email, rg.Password);
             ///TODO: add user to db
 

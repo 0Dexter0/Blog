@@ -11,17 +11,13 @@ namespace Blog.Controllers
     public class UserController : Controller
     {
         [HttpGet]
-        public string GetUser()
+        public User GetUser()
         {
-            var claim = HttpContext.User.Claims.FirstOrDefault(
-                c => c.Type == ClaimTypes.Email && c.Value is not null);
-            ///TODO: check claim
-            if (claim is null)
-            {
-                
-            }
-
-            return claim.Value;
+            var email = HttpContext.User.Claims.FirstOrDefault(
+                c => c.Type == ClaimTypes.Email && c.Value is not null)?.Value;
+            ///TODO: return user from db
+            
+            return new(){Email = email};
         }
     }
 }
