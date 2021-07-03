@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Controllers
 {
-    [Authorize]
     [Route("user")]
     public class UserController : Controller
     {
+        [Authorize]
         [HttpGet]
         public User GetUser()
         {
@@ -17,7 +17,16 @@ namespace Blog.Controllers
                 c => c.Type == ClaimTypes.Email && c.Value is not null)?.Value;
             ///TODO: return user from db
             
-            return new(){Email = email};
+            return null;
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public User GetUserById([FromRoute] long id)
+        {
+            /// TODO: return user from db 
+
+            return null;
         }
     }
 }

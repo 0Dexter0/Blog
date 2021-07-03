@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Blog.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Controllers
@@ -26,6 +27,7 @@ namespace Blog.Controllers
             return null;
         }
 
+        [Authorize]
         [HttpPost]
         public Post CreatePost([FromBody] Post post)
         {
@@ -34,11 +36,22 @@ namespace Blog.Controllers
             return post;
         }
 
+        [Authorize]
         [HttpPatch]
         [Route("{id}")]
         public Post UpdatePost([FromRoute] long id, [FromBody] PostUpdateModel update)
         {
             /// TODO: get post from db and update
+
+            return null;
+        }
+
+        [Authorize]
+        [HttpDelete]
+        [Route("{id}")]
+        public Post Delete([FromRoute] long id)
+        {
+            /// TODO: remove post from db
 
             return null;
         }
