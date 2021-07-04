@@ -7,28 +7,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Controllers
 {
-    [Route("user")]
+    [Route("users")]
     public class UserController : Controller
     {
-        private UserRepository _userRepository = new();
+        private readonly UserRepository _userRepository = new();
         
         [Authorize]
         [HttpGet]
-        public User GetUser()
+        public IActionResult GetUser()
         {
             var email = HttpContext.User.Claims.FirstOrDefault(
-                c => c.Type == ClaimTypes.Email && c.Value is not "")?.Value;
+                c => c.Type is ClaimTypes.Email && c.Value is not "")?.Value;
 
-            return _userRepository.GetUserByEmail(email);
+            return Json(_userRepository.GetUserByEmail(email));
         }
 
         [HttpGet]
         [Route("{id}")]
-        public User GetUserById([FromRoute] long id)
+        public IActionResult GetUserById([FromRoute] long id)
         {
-            User user = _userRepository.GetUserById(id);
-
-            return user;
+            return Json(_userRepository.GetUserById(id));
         }
     }
 }

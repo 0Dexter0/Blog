@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Blog.Models;
 using Blog.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -10,38 +8,38 @@ namespace Blog.Controllers
     [Route("posts")]
     public class PostController : Controller
     {
-        private PostRepository _postRepository = new();
+        private readonly PostRepository _postRepository = new();
         
         [HttpGet]
-        public List<Post> GetPosts()
+        public IActionResult GetPosts()
         {
             /// TODO: add paging
 
-            return _postRepository.GetAll();
+            return Json(_postRepository.GetAll());
         }
 
         [HttpGet]
         [Route("{id}")]
-        public Post GetPostBuId([FromRoute] long id)
+        public IActionResult GetPostBuId([FromRoute] long id)
         {
-            return _postRepository.GetPostById(id);
+            return Json(_postRepository.GetPostById(id));
         }
 
         [Authorize]
         [HttpPost]
-        public Post CreatePost([FromBody] Post post)
+        public IActionResult CreatePost([FromBody] Post post)
         {
             _postRepository.Create(post);
 
-            return post;
+            return Json(post);
         }
 
         [Authorize]
         [HttpPatch]
         [Route("{id}")]
-        public Post UpdatePost([FromRoute] long id, [FromBody] PostUpdateModel update)
+        public IActionResult UpdatePost([FromRoute] long id, [FromBody] PostUpdateModel update)
         {
-            return  _postRepository.Update(id, update); 
+            return  Json(_postRepository.Update(id, update)); 
         }
 
         [Authorize]

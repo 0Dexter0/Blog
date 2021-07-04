@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Blog.Models;
 using Blog.Repositories;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Controllers
@@ -10,13 +11,13 @@ namespace Blog.Controllers
     [Route("auth")]
     public class AuthController : Controller
     {
-        private UserRepository _userRepository = new();
+        private readonly UserRepository _userRepository = new();
 
         [HttpPost]
         [Route("login")]
-        public async Task<User> Login([FromBody]LoginModel lm)
+        public async Task<IActionResult> Login([FromBody]LoginModel lm)
         {
-            if (!ModelState.IsValid) return null;
+            if (!ModelState.IsValid) return StatusCode(404);
             
             ClaimsIdentity claimsIdentity = new(new[]
             {
@@ -29,18 +30,18 @@ namespace Blog.Controllers
             if (user.Password.Equals(lm.Password))
             {
                 await HttpContext.SignInAsync("Cookie", claimsPrincipal);
-                return user;
+                return Json(user);
             }
 
-            return null;
+            return StatusCode(403);
             /// TODO: add password encryption
         }
         
         [HttpPost]
         [Route("register")]
-        public async Task<User> Register([FromBody]RegisterModel rg)
+        public async Task<IActionResult> Register([FromBody]RegisterModel rg)
         {
-            if (!ModelState.IsValid) return null;
+            if (!ModelState.IsValid) return StatusCode(404);
 
             /// TODO: add password encryption
             /// TODO: add a check for user existence
@@ -55,10 +56,10 @@ namespace Blog.Controllers
 
             await HttpContext.SignInAsync("Cookie", claimsPrincipal);
             
-            return user;
+            return Json(user);
         }
         
-        [HttpGet]
+        [HttpPost]
         [Route("logout")]
         public void LogOut()
         {
