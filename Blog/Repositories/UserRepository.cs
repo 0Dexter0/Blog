@@ -1,12 +1,12 @@
 using System.Linq;
 using Blog.Context;
-using Blog.Models;
+using Blog.User;
 
 namespace Blog.Repositories
 {
     public class UserRepository
     {
-        public void Create(User user)
+        public void Create(UserModel user)
         {
             using (ApplicationContext ac = new())
             {
@@ -15,7 +15,7 @@ namespace Blog.Repositories
             }
         }
 
-        public User GetUserById(long id)
+        public UserModel GetUserById(long id)
         {
             using (ApplicationContext ac = new())
             {
@@ -23,7 +23,7 @@ namespace Blog.Repositories
             }
         }
         
-        public User GetUserByEmail(string email)
+        public UserModel GetUserByEmail(string email)
         {
             using (ApplicationContext ac = new())
             {

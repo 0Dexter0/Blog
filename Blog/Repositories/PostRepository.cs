@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Blog.Context;
 using Blog.Models;
+using Blog.Post;
+
 
 namespace Blog.Repositories
 {
     public class PostRepository
     {
-        public void Create(Post post)
+        public void Create(PostModel post)
         {
             using (ApplicationContext ac = new())
             {
@@ -16,11 +18,11 @@ namespace Blog.Repositories
             }
         }
 
-        public Post Update(long id, PostUpdateModel update)
+        public PostModel Update(long id, PostUpdateModel update)
         {
             using (ApplicationContext ac = new())
             {
-                Post post = GetPostById(id);
+                PostModel post = GetPostById(id);
 
                 if (update.Content is not null) post.Content = update.Content;
                 if (update.Title is not null) post.Title = update.Title;
@@ -32,7 +34,7 @@ namespace Blog.Repositories
             }
         }
 
-        public Post GetPostById(long id)
+        public PostModel GetPostById(long id)
         {
             using (ApplicationContext ac = new())
             {
@@ -49,7 +51,7 @@ namespace Blog.Repositories
             }
         }
 
-        public void Delete(Post post)
+        public void Delete(PostModel post)
         {
             using (ApplicationContext ac = new())
             {
@@ -58,7 +60,7 @@ namespace Blog.Repositories
             }
         }
 
-        public List<Post> GetAll()
+        public List<PostModel> GetAll()
         {
             using (ApplicationContext ac = new())
             {

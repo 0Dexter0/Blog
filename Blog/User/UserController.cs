@@ -1,11 +1,10 @@
 using System.Linq;
 using System.Security.Claims;
-using Blog.Models;
 using Blog.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Blog.Controllers
+namespace Blog.User
 {
     [Route("users")]
     public class UserController : Controller

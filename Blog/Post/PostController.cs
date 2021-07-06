@@ -3,7 +3,7 @@ using Blog.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Blog.Controllers
+namespace Blog.Post
 {
     [Route("posts")]
     public class PostController : Controller
@@ -27,7 +27,7 @@ namespace Blog.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreatePost([FromBody] Post post)
+        public IActionResult CreatePost([FromBody] PostModel post)
         {
             _postRepository.Create(post);
 

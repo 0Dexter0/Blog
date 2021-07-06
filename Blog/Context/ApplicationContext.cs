@@ -1,20 +1,17 @@
-using Blog.Models;
+using Blog.Comment;
+using Blog.Post;
+using Blog.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Context
 {
     public class ApplicationContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserModel> Users { get; set; }
 
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<PostModel> Posts { get; set; }
 
-        public DbSet<Comment> Comments { get; set; }
-
-        public ApplicationContext()
-        {
-            //Database.EnsureCreated();
-        }
+        public DbSet<CommentModel> Comments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

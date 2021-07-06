@@ -6,3 +6,4 @@ riderModule.iml
 .idea/.idea.Blog/.idea/
 .vs/
 Migrations/
+appsettings.Development.json

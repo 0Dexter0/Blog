@@ -1,12 +1,13 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Blog.Models;
+using Blog.User;
 using Blog.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Blog.Controllers
+namespace Blog.Auth
 {
     [Route("auth")]
     public class AuthController : Controller
@@ -25,7 +26,7 @@ namespace Blog.Controllers
             }, "Cookie");
             ClaimsPrincipal claimsPrincipal = new(claimsIdentity);
 
-            User user = _userRepository.GetUserByEmail(lm.Email);
+            UserModel user = _userRepository.GetUserByEmail(lm.Email);
 
             if (user.Password.Equals(lm.Password))
             {
@@ -45,7 +46,7 @@ namespace Blog.Controllers
 
             /// TODO: add password encryption
             /// TODO: add a check for user existence
-            User user = new(rg.UserName, rg.Email, rg.Password);
+            UserModel user = new(rg.UserName, rg.Email, rg.Password);
             _userRepository.Create(user);
 
             ClaimsIdentity claimsIdentity = new(new[]
