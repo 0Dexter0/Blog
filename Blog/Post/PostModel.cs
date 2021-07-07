@@ -14,7 +14,7 @@ namespace Blog.Post
         public DateTime LastEdited { get; set; }
         private List<CommentModel> Comments { get; set; }
         
-        public UserModel Creator { get; init; }
+        //public UserModel Creator { get; init; }
         public long CreatorId { get; init; }
 
         public PostModel()

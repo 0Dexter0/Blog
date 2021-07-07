@@ -28,6 +28,7 @@ namespace Blog.Repositories
                 if (update.Title is not null) post.Title = update.Title;
                 post.LastEdited = update.UpdateTime;
 
+                ac.Update(post);
                 ac.SaveChanges();
 
                 return post;

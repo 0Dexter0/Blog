@@ -21,7 +21,11 @@ namespace Blog.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder
+                .Entity<PostModel>()
+                .HasOne<UserModel>()
+                .WithMany(u => u.Posts)
+                .HasForeignKey(p => p.CreatorId);
         }
     }
 }

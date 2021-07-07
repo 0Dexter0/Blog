@@ -1,6 +1,8 @@
 using System.Linq;
 using Blog.Context;
+using Blog.Post;
 using Blog.User;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Repositories
 {
@@ -27,8 +29,20 @@ namespace Blog.Repositories
         {
             using (ApplicationContext ac = new())
             {
-                return ac.Users.FirstOrDefault(u => u.Email.Equals(email));
+                return ac.Users.Include(u => u.Posts)
+                    .FirstOrDefault(u => u.Email.Equals(email));
             }
+        }
+
+        public UserModel AddPost(UserModel user, PostModel post)
+        {
+            using (ApplicationContext ac = new())
+            {
+                user.Posts.Add(post);
+                ac.SaveChanges();
+            }
+
+            return user;
         }
     }
 }

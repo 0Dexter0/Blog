@@ -1,5 +1,9 @@
+using System;
+using System.Linq;
+using System.Security.Claims;
 using Blog.Models;
 using Blog.Repositories;
+using Blog.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +13,7 @@ namespace Blog.Post
     public class PostController : Controller
     {
         private readonly PostRepository _postRepository = new();
+        private readonly UserRepository _userRepository = new();
         
         [HttpGet]
         public IActionResult GetPosts()
@@ -27,9 +32,22 @@ namespace Blog.Post
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreatePost([FromBody] PostModel post)
+        public IActionResult CreatePost([FromBody] CreatePostModel post)
         {
-            _postRepository.Create(post);
+            string email = HttpContext.User.Claims.FirstOrDefault(c =>
+                c.Type is ClaimTypes.Email)?.Value;
+            UserModel creator = _userRepository.GetUserByEmail(email);
+
+            PostModel newPost = new()
+            {
+                Title = post.Title,
+                Content = post.Content,
+                Published = DateTime.Now,
+                LastEdited = DateTime.Now,
+                CreatorId = creator.Id
+            };
+            _postRepository.Create(newPost);
+            _userRepository.AddPost(creator, newPost);
 
             return Json(post);
         }
@@ -39,15 +57,34 @@ namespace Blog.Post
         [Route("{id}")]
         public IActionResult UpdatePost([FromRoute] long id, [FromBody] PostUpdateModel update)
         {
-            return  Json(_postRepository.Update(id, update)); 
+            string email = HttpContext.User.Claims.FirstOrDefault(c =>
+                c.Type is ClaimTypes.Email)?.Value;
+            UserModel creator = _userRepository.GetUserByEmail(email);
+            PostModel post = _postRepository.GetPostById(id);
+
+            if (post.CreatorId.Equals(creator.Id))
+                return Json(_postRepository.Update(id, update));
+
+            return Forbid();
         }
 
         [Authorize]
         [HttpDelete]
         [Route("{id}")]
-        public void Delete([FromRoute] long id)
+        public IActionResult Delete([FromRoute] long id)
         {
-            _postRepository.DeleteById(id);
+            string email = HttpContext.User.Claims.FirstOrDefault(c =>
+                c.Type is ClaimTypes.Email)?.Value;
+            UserModel creator = _userRepository.GetUserByEmail(email);
+            PostModel post = _postRepository.GetPostById(id);
+
+            if (post.CreatorId.Equals(creator.Id))
+            {
+                _postRepository.Delete(post);
+                return Ok();
+            }
+            
+            return Forbid();
         }
     }
 }
