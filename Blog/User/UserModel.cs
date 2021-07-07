@@ -1,21 +1,22 @@
 using System.Collections.Generic;
+using Blog.Post;
 
-namespace Blog.Models
+namespace Blog.User
 {
-    public class User
+    public class UserModel
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public List<Post> Posts { get; set; }
+        public List<PostModel> Posts { get; set; }
 
-        public User()
+        public UserModel()
         {
             Posts = new();
         }
 
-        public User(string userName, string email, string password)
+        public UserModel(string userName, string email, string password)
         {
             UserName = userName;
             Email = email;
