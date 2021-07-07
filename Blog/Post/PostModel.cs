@@ -13,8 +13,6 @@ namespace Blog.Post
         public DateTime Published { get; init; }
         public DateTime LastEdited { get; set; }
         private List<CommentModel> Comments { get; set; }
-        
-        //public UserModel Creator { get; init; }
         public long CreatorId { get; init; }
 
         public PostModel()

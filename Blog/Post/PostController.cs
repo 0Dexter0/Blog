@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Blog.Models;
@@ -16,11 +17,12 @@ namespace Blog.Post
         private readonly UserRepository _userRepository = new();
         
         [HttpGet]
-        public IActionResult GetPosts()
+        public IActionResult GetPosts(int page = 1)
         {
-            /// TODO: add paging
-
-            return Json(_postRepository.GetAll());
+            int pageSize = 2;
+            List<PostModel> posts = _postRepository.GetAll();
+            
+            return Json(posts.Skip((page - 1) * pageSize).Take(pageSize));
         }
 
         [HttpGet]
