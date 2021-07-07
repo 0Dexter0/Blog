@@ -1,10 +1,10 @@
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Blog.Models;
 using Blog.User;
 using Blog.Repositories;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Auth
@@ -18,7 +18,7 @@ namespace Blog.Auth
         [Route("login")]
         public async Task<IActionResult> Login([FromBody]LoginModel lm)
         {
-            if (!ModelState.IsValid) return StatusCode(404);
+            if (!ModelState.IsValid) return ValidationProblem();
             
             ClaimsIdentity claimsIdentity = new(new[]
             {
@@ -28,25 +28,27 @@ namespace Blog.Auth
 
             UserModel user = _userRepository.GetUserByEmail(lm.Email);
 
-            if (user.Password.Equals(lm.Password))
+            if (user is null) return NotFound();
+            
+            if (BCrypt.Net.BCrypt.Verify(lm.Password, user.Password))
             {
                 await HttpContext.SignInAsync("Cookie", claimsPrincipal);
                 return Json(user);
             }
 
-            return StatusCode(403);
-            /// TODO: add password encryption
+            return BadRequest();
         }
         
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody]RegisterModel rg)
         {
-            if (!ModelState.IsValid) return StatusCode(404);
+            if (!ModelState.IsValid) return ValidationProblem();
 
-            /// TODO: add password encryption
-            /// TODO: add a check for user existence
-            UserModel user = new(rg.UserName, rg.Email, rg.Password);
+            if (_userRepository.GetUserByEmail(rg.Email) is not null) return BadRequest(); /// TODO: return correct status code
+
+            string password = BCrypt.Net.BCrypt.HashPassword(rg.Password);
+            UserModel user = new(rg.UserName, rg.Email, password);
             _userRepository.Create(user);
 
             ClaimsIdentity claimsIdentity = new(new[]
