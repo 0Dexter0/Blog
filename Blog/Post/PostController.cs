@@ -21,6 +21,10 @@ namespace Blog.Post
         {
             int pageSize = 2;
             List<PostModel> posts = _postRepository.GetAll();
+
+            PageViewModel vm = new(posts.Count, page, pageSize);
+
+            if (!vm.HasNextPage && !vm.HasPreviousPage) return NotFound();
             
             return Json(posts.Skip((page - 1) * pageSize).Take(pageSize));
         }
