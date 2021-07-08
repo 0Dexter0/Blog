@@ -1,13 +1,12 @@
-using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Blog.Models;
-using Blog.User;
-using Blog.Repositories;
+using Blog.Components.Models;
+using Blog.Components.User;
+using Blog.Components.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Blog.Auth
+namespace Blog.Components.Auth
 {
     [Route("auth")]
     public class AuthController : Controller

@@ -1,8 +1,8 @@
 using System;
-using Blog.Post;
-using Blog.User;
+using Blog.Components.Post;
+using Blog.Components.User;
 
-namespace Blog.Comment
+namespace Blog.Components.Comment
 {
     public class CommentModel
     {

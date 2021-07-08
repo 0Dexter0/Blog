@@ -1,4 +1,5 @@
 ﻿using System;
+using Blog.Components;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 

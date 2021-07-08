@@ -1,13 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using Blog.Models;
-using Blog.Repositories;
-using Blog.User;
+using Blog.Components.Models;
+using Blog.Components.Repositories;
+using Blog.Components.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Blog.Post
+namespace Blog.Components.Post
 {
     [Route("posts")]
     public class PostController : Controller
@@ -16,11 +17,16 @@ namespace Blog.Post
         private readonly UserRepository _userRepository = new();
         
         [HttpGet]
-        public IActionResult GetPosts()
+        public IActionResult GetPosts(int page = 1)
         {
-            /// TODO: add paging
+            int pageSize = 5;
+            List<PostModel> posts = _postRepository.GetAll();
 
-            return Json(_postRepository.GetAll());
+            PageViewModel vm = new(posts.Count, page, pageSize);
+
+            //if (!vm.HasNextPage || !vm.HasPreviousPage) return NotFound();
+            
+            return Json(posts.Skip((page - 1) * pageSize).Take(pageSize));
         }
 
         [HttpGet]

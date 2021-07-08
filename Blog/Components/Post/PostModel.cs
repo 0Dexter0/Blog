@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Blog.Comment;
-using Blog.User;
+using Blog.Components.Comment;
 
-namespace Blog.Post
+namespace Blog.Components.Post
 {
     public class PostModel
     {
@@ -13,8 +12,6 @@ namespace Blog.Post
         public DateTime Published { get; init; }
         public DateTime LastEdited { get; set; }
         private List<CommentModel> Comments { get; set; }
-        
-        //public UserModel Creator { get; init; }
         public long CreatorId { get; init; }
 
         public PostModel()
