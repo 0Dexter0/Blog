@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Blog.Comment;
-using Blog.User;
+using Blog.Components.Comment;
 
-namespace Blog.Post
+namespace Blog.Components.Post
 {
     public class PostModel
     {

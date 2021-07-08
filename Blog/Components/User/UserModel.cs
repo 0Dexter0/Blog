@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Blog.Post;
+using Blog.Components.Post;
 
-namespace Blog.User
+namespace Blog.Components.User
 {
     public class UserModel
     {

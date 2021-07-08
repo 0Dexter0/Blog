@@ -1,10 +1,10 @@
 using System.Linq;
-using Blog.Context;
-using Blog.Post;
-using Blog.User;
+using Blog.Components.Context;
+using Blog.Components.Post;
+using Blog.Components.User;
 using Microsoft.EntityFrameworkCore;
 
-namespace Blog.Repositories
+namespace Blog.Components.Repositories
 {
     public class UserRepository
     {

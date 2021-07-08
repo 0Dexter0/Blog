@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using Blog.Context;
-using Blog.Models;
-using Blog.Post;
+using Blog.Components.Context;
+using Blog.Components.Models;
+using Blog.Components.Post;
 
 
-namespace Blog.Repositories
+namespace Blog.Components.Repositories
 {
     public class PostRepository
     {

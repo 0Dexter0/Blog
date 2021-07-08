@@ -1,9 +1,9 @@
-using Blog.Comment;
-using Blog.Post;
-using Blog.User;
+using Blog.Components.Comment;
+using Blog.Components.Post;
+using Blog.Components.User;
 using Microsoft.EntityFrameworkCore;
 
-namespace Blog.Context
+namespace Blog.Components.Context
 {
     public class ApplicationContext : DbContext
     {

@@ -1,6 +1,5 @@
-using System;
 
-namespace Blog.Models
+namespace Blog.Components.Models
 {
     public class CreatePostModel
     {
